@@ -1,0 +1,38 @@
+
+
+
+
+<body>
+
+<section id="content">
+  <div class="container"  *ngFor="let course of courses|async let number=index">
+    <div class="row">
+      <div class="col-lg-8">
+
+        <article>
+          <h3>{{course.title}}</h3>
+          <img src={{course.url}} alt="" class="img-responsive" />
+
+          <p>
+            {{course.descr}}
+          </p>
+          <div class="bottom-article">
+            <ul class="meta-post">
+              <!--<li><i class="fa fa-calendar"></i><a href="#">{{course.descr}}</a></li>-->
+            </ul>
+          </div>
+        </article>
+      </div>
+    </div>
+
+
+  </div>
+</section>
+
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+
+
+
+</body>
+
+

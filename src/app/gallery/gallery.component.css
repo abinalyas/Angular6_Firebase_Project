@@ -1,0 +1,13 @@
+/*::ng-deep .ngx-gallery-center{*/
+  /*!*bottom: 120px !important;*!*/
+  /*top : 0 !important;*/
+  /*bottom: 0 !important;*/
+
+/*}*/
+#content img {
+  margin-bottom: 0 !important;
+}
+::ng-deep ngx-gallery-thumbnails {
+position: absolute !important;
+
+}

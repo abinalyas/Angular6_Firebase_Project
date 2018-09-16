@@ -1,0 +1,242 @@
+<div *ngIf="!upSvc.warning">
+  <h2>Invalid page</h2>
+</div>
+<div *ngIf="upSvc.warning">
+
+<div class="center">
+<div class="btn-group btngroup" style="justify-content: center !important;">
+  <button type="button" class="btn user-selection-btn"  (click)="addCourse()"  [ngClass]="{'card_active_true_tenant':card === '1', 'card_active_false_tenant': card !== '1'}">Add Courses</button>
+  <button type="button" class="btn user-selection-btn"  (click)="addEvents()" [ngClass]="{'card_active_true_admin':card === '2', 'card_active_false_admin': card !== '2'}" >Add Events</button>
+  <button type="button" class="btn user-selection-btn"  (click)="addPhotos()" [ngClass]="{'card_active_true_log':card === '3', 'card_active_false_admin': card !== '3'}" >Add Photos</button>
+  <button type="button" class="btn user-selection-btn"  (click)="addActivities()" [ngClass]="{'card_active_true_log':card === '4', 'card_active_false_admin': card !== '4'}" >Add Activities</button>
+</div>
+</div>
+
+<div class="addevents" *ngIf="addevents">
+
+  <div class="row">
+
+        <div class="col-sm-4">
+              <h2>Add a event</h2>
+              <form  #heroForm="ngForm">
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control" id="name"
+                         required
+                         [(ngModel)]="title" name="name"
+                         #name="ngModel">
+                  <div [hidden]="name.valid || name.pristine"
+                       class="alert alert-danger">
+                    Name is required
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="alterEgo">Description</label>
+                  <input type="text" class="form-control" id="alterEgo"
+                         [(ngModel)]="desc" name="alterEgo">
+                </div>
+
+                <div *ngIf="currentUpload">
+                  <div class="progress">
+                    <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+                  </div>
+                  Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
+                </div>
+
+                <label> Upload Image
+                  <input type="file" (change)="detectFiles($event)">
+                </label>
+
+
+
+
+                <button type="submit" class="btn btn-success" (click)="onEnter()" [disabled]="!heroForm.form.valid">Submit</button>
+                <!--<button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>-->
+              </form>
+
+        </div>
+
+    <div class="col-sm-6 floatright" style="padding-right: 30px;">
+      <h2>Event List</h2>
+      <ul class="list-group" *ngFor="let event of events|async let number=index">
+        <li class="list-group-item">{{event.title}}<span class="badge"><i (click)="removeItemFromList(event)" class="fa fa-trash" aria-hidden="true"></i></span></li>
+      </ul>
+    </div>
+
+    <!--The content below is only a placeholder and can be replaced.-->
+    <!--<button mat-raised-button color="primary" (click)="fileInput.click()">Click</button>-->
+    <!--<input #fileInput type="file" (change)="chooseFiles($event)" style="display:none;" />-->
+
+    <img style=" " src="{{imgsrc | async}}">
+
+    <div> {{ progressBarValue }}</div>
+
+    <mat-progress-bar
+      [color]="color"
+      [mode]="mode"
+      [value]="progressBarValue">
+    </mat-progress-bar>
+
+</div>
+</div>
+
+<div class="addcourse" *ngIf="addcourse">
+
+  <div class="row">
+
+    <div class="col-sm-4">
+      <h2>Add a course</h2>
+      <form  #heroForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name"
+                 required
+                 [(ngModel)]="title" name="name"
+                 #name="ngModel">
+          <div [hidden]="name.valid || name.pristine"
+               class="alert alert-danger">
+            Name is required
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="alterEgo">Description</label>
+          <input type="text" class="form-control" id="alterEgo"
+                 [(ngModel)]="desc" name="alterEgo">
+        </div>
+        <button type="submit" class="btn btn-success" (click)="onAddCourse()" [disabled]="!heroForm.form.valid">Submit</button>
+        <!--<button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>-->
+      </form>
+    </div>
+
+    <div class="col-sm-6 floatright" style="padding-right: 30px;">
+      <h2>Course List</h2>
+      <ul class="list-group" *ngFor="let course of courses|async let number=index">
+        <li class="list-group-item">{{course.title}}{{course.$key}}<span class="badge"><i (click)="removeItemFromCourse(course)" class="fa fa-trash" aria-hidden="true"></i></span></li>
+      </ul>
+    </div>
+
+
+    <img style=" " src="{{imgsrc | async}}">
+
+    <div> {{ progressBarValue }}</div>
+
+    <mat-progress-bar
+      [color]="color"
+      [mode]="mode"
+      [value]="progressBarValue">
+    </mat-progress-bar>
+
+  </div>
+</div>
+
+<div class="addcourse" *ngIf="addactivities">
+
+    <div class="row">
+
+      <div class="col-sm-4">
+        <h2>Add a activity</h2>
+        <form  #heroForm="ngForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name"
+                   required
+                   [(ngModel)]="title" name="name"
+                   #name="ngModel">
+            <div [hidden]="name.valid || name.pristine"
+                 class="alert alert-danger">
+              Name is required
+            </div>
+          </div>
+
+          <!--<div class="form-group">-->
+            <!--<label for="alterEgo">Description</label>-->
+            <!--<input type="text" class="form-control" id="alterEgo"-->
+                   <!--[(ngModel)]="desc" name="alterEgo">-->
+          <!--</div>-->
+          <button type="submit" class="btn btn-success" (click)="onAddActivities()" [disabled]="!heroForm.form.valid">Submit</button>
+          <!--<button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>-->
+        </form>
+      </div>
+
+      <div class="col-sm-6 floatright" style="padding-right: 30px;">
+        <h2>Activity List</h2>
+        <ul class="list-group" *ngFor="let course of activities |async let number=index">
+          <li class="list-group-item">{{course.title}}{{course.$key}}<span class="badge"><i (click)="removeItemFromActivities(course)" class="fa fa-trash" aria-hidden="true"></i></span></li>
+        </ul>
+      </div>
+
+
+      <img style=" " src="{{imgsrc | async}}">
+
+      <div> {{ progressBarValue }}</div>
+
+      <mat-progress-bar
+        [color]="color"
+        [mode]="mode"
+        [value]="progressBarValue">
+      </mat-progress-bar>
+
+    </div>
+  </div>
+<div class="addevents" *ngIf="addphotos">
+
+  <div class="row">
+
+    <div class="col-sm-4">
+      <h2>Add a photo</h2>
+      <form  #heroForm="ngForm">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" id="name"
+                 required
+                 [(ngModel)]="title" name="name"
+                 #name="ngModel">
+          <div [hidden]="name.valid || name.pristine"
+               class="alert alert-danger">
+            Name is required
+          </div>
+        </div>
+
+        <div *ngIf="currentUpload">
+          <div class="progress">
+            <div class="progress-bar progress-bar-animated" [ngStyle]="{ 'width': currentUpload?.progress + '%' }"></div>
+          </div>
+          Progress: {{currentUpload?.name}} | {{currentUpload?.progress}}% Complete
+        </div>
+
+        <label> Upload Image
+          <input type="file" (change)="detectFiles($event)">
+        </label>
+        <button type="submit" class="btn btn-success" (click)="onEnterPhotos()" [disabled]="!heroForm.form.valid">Submit</button>
+        <!--<button type="button" class="btn btn-default" (click)="newHero(); heroForm.reset()">New Hero</button>-->
+      </form>
+    </div>
+
+
+    <div class="col-sm-6 floatright" style="padding-right: 30px;">
+      <h2>Photos List</h2>
+      <ul class="list-group" *ngFor="let course of photos|async let number=index">
+        <li class="list-group-item">{{course.title}}{{course.$key}}<span class="badge"><i (click)="removeItemFromPhotos(course)" class="fa fa-trash" aria-hidden="true"></i></span></li>
+      </ul>
+    </div>
+
+    <!--The content below is only a placeholder and can be replaced.-->
+    <!--<button mat-raised-button color="primary" (click)="fileInput.click()">Click</button>-->
+    <!--<input #fileInput type="file" (change)="chooseFiles($event)" style="display:none;" />-->
+
+    <img style=" " src="{{imgsrc | async}}">
+
+    <div> {{ progressBarValue }}</div>
+
+    <mat-progress-bar
+      [color]="color"
+      [mode]="mode"
+      [value]="progressBarValue">
+    </mat-progress-bar>
+
+  </div>
+</div>
+
+</div>

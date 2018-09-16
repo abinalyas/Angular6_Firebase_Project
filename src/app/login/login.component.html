@@ -1,0 +1,48 @@
+<div class="google-login-page ">
+  <div style="font-weight:100;font-size:20px; text-align:center;background-color: white;padding-top: 200px;padding-bottom: 200px; ">
+    <!--<img *ngIf="!email" src="assets\img\googlelogo.png" class="w3-img"style="width:2%;margin-top:10px">-->
+    <!--<br />-->
+    <!--<div class="w3-btn " *ngIf="!email" id="google-login-button" (click)="googleAuthenticate()">-->
+      <!--Sign-In</div>-->
+    <button *ngIf="!email"  id="google-login-button" class="loginBtn loginBtn--google" (click)="googleAuthenticate()">
+      Login with Google
+    </button>
+    <button *ngIf="!email"  id="google-login-button1" class="loginBtn loginBtn--google" (click)="logout()">
+      Log Out
+    </button>
+
+    <!--<div class="panel-group" *ngFor="let course of adminlevel|async">-->
+      <!--<div class="panel panel-default">-->
+        <!--<div class="panel-heading">-->
+          <!--<h4 class="panel-title" >-->
+            <!--<a data-toggle="collapse" href="#collapse1">{{ course.email}}</a>-->
+          <!--</h4>-->
+        <!--</div>-->
+        <!--<div id="collapse1" class="panel-collapse collapse">-->
+          <!--<ul class="list-group">-->
+            <!--<li class="list-group-item">One</li>-->
+          <!--</ul>-->
+          <!--<div class="panel-footer">Footer</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+
+    <div *ngIf="email" class="w3-animate-zoom-slow">
+      <img src="{{imageURL}}" style="border-radius:100%;width:30%; margin:10px 10px 10px 5px" >
+      <!-- <img *ngIf="email" src="assets\img\logo.png" class="w3-img"style="z-index: 1;
+      width: 8%;
+      margin-left: -35px;
+      margin-bottom: 50px;"> -->
+      <div style=" text-align:center">{{name}}
+      </div>
+      <button class="w3-btn btn-danger " style="font-weight:100;font-size:20px" (click)="logout()">Logout</button>
+    </div>
+    <!-- <b>TOKEN: </b>
+    <p>{{token}}</p> -->
+    <!-- <b>NAME: </b> -->
+
+    <!-- <b>EMAIL: </b> -->
+    <!-- <p>{{email}}</p> -->
+
+  </div>
+</div>
